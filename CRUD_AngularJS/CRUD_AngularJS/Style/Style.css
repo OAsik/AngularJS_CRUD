@@ -1,0 +1,249 @@
+﻿/*HTML Body*/
+body {
+    font-size: 12px;
+    font-family: sans-serif;
+    background: #2c3e50;
+}
+
+.form-group {
+    color: white;
+}
+/*HTML Body*/
+/*NavBar*/
+nav {
+    margin: 27px auto 0;
+    position: relative;
+    width: 590px;
+    height: 50px;
+    background-color: #34495e;
+    border-radius: 8px;
+    font-size: 0;
+}
+
+    nav a {
+        line-height: 50px;
+        height: 100%;
+        font-size: 15px;
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+        color: white;
+        cursor: pointer;
+    }
+
+        nav a:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+    nav .animation {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        z-index: 0;
+        transition: all .5s ease 0s;
+        border-radius: 8px;
+    }
+
+a:nth-child(1) {
+    width: 100px;
+}
+
+a:nth-child(2) {
+    width: 110px;
+}
+
+a:nth-child(3) {
+    width: 100px;
+}
+
+a:nth-child(4) {
+    width: 160px;
+}
+
+a:nth-child(5) {
+    width: 120px;
+}
+
+nav .start-home, a:nth-child(1):hover ~ .animation {
+    width: 100px;
+    left: 0;
+    background-color: #1abc9c;
+}
+
+nav .start-actions, a:nth-child(2):hover ~ .animation {
+    width: 110px;
+    left: 100px;
+    background-color: #e74c3c;
+}
+
+nav .start-table, a:nth-child(3):hover ~ .animation {
+    width: 100px;
+    left: 210px;
+    background-color: #3498db;
+}
+
+nav .start-json, a:nth-child(4):hover ~ .animation {
+    width: 160px;
+    left: 310px;
+    background-color: #9b59b6;
+}
+
+nav .start-contact, a:nth-child(5):hover ~ .animation {
+    width: 120px;
+    left: 470px;
+    background-color: #e67e22;
+}
+/*NavBar*/
+/*First Parallax*/
+#first-window {
+    background-image: url('../Images/angularjs-e.png');
+    margin-top: 80px;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+    #first-window p {
+        text-align: center;
+        padding: 45px;
+        font-weight: bold;
+        color: white;
+        font-size: 19px;
+    }
+
+#first-inside {
+    padding: 3em 0;
+    background-color: rgba(75, 86, 160, 0.7);
+    height: 180px;
+}
+/*First Parallax*/
+/*Second Parallax*/
+#second-window {
+    background-image: url('../Images/banner-angularjs-730x410.jpg');
+    margin-top: 80px;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    margin-top: 360px;
+}
+
+    #second-window p {
+        text-align: center;
+        padding: 45px;
+        font-weight: bold;
+        color: white;
+        font-size: 19px;
+    }
+
+#second-inside {
+    padding: 3em 0;
+    background-color: rgba(75, 86, 160, 0.7);
+    height: 180px;
+}
+/*Second Parallax*/
+/*Third Parallax*/
+#third-window {
+    background-image: url('../Images/AngularJS-training-in-guntur.png');
+    margin-top: 80px;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    margin-top: 600px;
+}
+
+    #third-window p {
+        text-align: center;
+        padding: 45px;
+        font-weight: bold;
+        color: white;
+        font-size: 19px;
+    }
+
+#third-inside {
+    padding: 3em 0;
+    background-color: rgba(75, 86, 160, 0.7);
+    height: 180px;
+}
+/*Third Parallax*/
+/*First Table*/
+.first-table {
+    display: inline-block;
+    margin-top: 100px;
+}
+/*First Table*/
+/*Second Table*/
+.second-table {
+    margin-top: 100px;
+}
+
+    .second-table th {
+        color: white;
+    }
+
+    .second-table-cells {
+        color: white;
+    }
+/*Second Table*/
+/*Third Table*/
+#third-table {
+    margin-left: 5%;
+    margin-top: 50px;
+    width: 90%;
+    background: #2c3e50;
+    color: white;
+    display: inline-block;
+}
+/*Third Table*/
+/*Scroll Buttons*/
+.scroll-button-first {
+    margin-top: 250px;
+    float: right;
+    cursor: pointer;
+}
+.scroll-button-second {
+    margin-top: 470px;
+    float: right;
+    cursor: pointer;
+}
+.scroll-button-third {
+    margin-top: 80px;
+    float: right;
+    cursor: pointer;
+}
+/*Scroll Buttons*/
+/*Footer Section*/
+footer {
+    text-align: center;
+    width: 100%;
+    height: 200px;
+    background: #2d2d30;
+    color: #f5f5f5;
+    margin-top: 200px;
+}
+
+#footer-table {
+    position: absolute;
+    border: 1px solid rgba(75, 86, 160, 0.7);
+    margin-top: 100px;
+    margin-left: 41%;
+}
+
+#footer-table td {
+    padding: 5px;
+}
+
+.footer-button {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: -50px;
+}
+
+.footer-button:hover {
+    color: red !important;
+    text-decoration: none;
+}
+/*Footer Section*/

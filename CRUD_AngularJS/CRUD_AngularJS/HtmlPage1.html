@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <link href="Style/Style.css" rel="stylesheet" />
+</head>
+<body>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#first-tab">Actions</a>
+        <a href="#second-tab">Table</a>
+        <a href="#third-table">JSON</a>
+        <a href="#footer">Contact</a>
+        <div class="animation start-home"></div>
+    </nav>
+    <div ng-controller="crudController as vm">
+        <div id="first-window">
+            <div id="first-inside">
+                <div class="row">
+                    <p>Lets make some awesome CRUD actions using AngularJS and Web API. Thanks to AngularJS our table will be updated without refreshing the page. But first we need to insert some shipping companies. You can always check the current table status by jumping to the <i>Table Section</i></p>
+                </div>
+            </div>
+        </div>
+        <div id="first-tab" class="col-md-3 col-md-offset-5 first-table">
+            <form novalidate>
+                <input type="hidden" name="name" ng-model="vm.Shipper.ShipperID" />
+                <label class="form-group">Company Name: <input class="form-control" type="text" ng-model="vm.Shipper.CompanyName" /></label><br />
+                <label class="form-group">Phone: <input class="form-control" type="text" ng-model="vm.Shipper.Phone" /></label><br />
+                <input type="button" class="btn btn-warning" value="Clear" ng-click="vm.Reset()" />
+                <input type="button" class="btn btn-success" value="Insert" ng-click="vm.Insert(vm.Shipper)" />
+                <input type="button" class="btn btn-info" value="Update" ng-click="vm.Update(vm.Shipper)" /><br />
+            </form>
+        </div>
+        <img class="scroll-button-first" src="Images/scroll-down-icon.png" />
+        <div id="second-window">
+            <div id="second-inside">
+                <div class="row">
+                    <p>We are doing great! You should see the company you have inserted on the below table. Company you have inserted is dynamically included thanks to AngularJS's app.factory module.</p>
+                </div>
+            </div>
+        </div>
+        <div id="second-tab" class="col-lg-6 col-lg-offset-3 second-table">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Shipper ID</th>
+                        <th>Company Name</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="s in vm.Shippers">
+                        <td class="second-table-cells">{{s.ShipperID}}</td>
+                        <td class="second-table-cells">{{s.CompanyName}}</td>
+                        <td class="second-table-cells">{{s.Phone}}</td>
+                        <td>
+                            <input type="button" value="Select" class="btn btn-primary" ng-click="vm.Select(s.ShipperID)" />
+                            <input type="button" value="Delete" class="btn btn-danger" ng-click="vm.Delete(s.ShipperID)" />
+                            <input type="button" value="Update" class="btn btn-warning" ng-click="vm.SelectToUpdate(s.ShipperID)" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <img class="scroll-button-second second-up" src="Images/scroll-up-icon.png" />
+        <img class="scroll-button-second second-down" src="Images/scroll-down-icon.png" />
+        <div id="third-window">
+            <div id="third-inside">
+                <div class="row">
+                    <p>By now you have fully witnessed the magic of AngularJS. Its very easy and quick to do CRUD actions alongside filtering, sorting etc. with AngularJS. On the last step, below, we could read the details of the company we have selected in JSON format.</p>
+                </div>
+            </div>
+        </div>
+        <pre id="third-table">
+            Shipping = {{vm.selectedShipper | json}}
+        </pre>
+        <img class="scroll-button-third" src="Images/scroll-up-icon.png" />
+    </div>
+    <footer id="footer">
+        <a href="" class="footer-button" title="Click to jump to the top"><span class="glyphicon glyphicon-chevron-up"></span></a>
+        <table id="footer-table">
+            <tr>
+                <td>
+                    <img src="Images/linkedin-icon.png" />
+                </td>
+                <td>
+                    <a target="_blank" href="http://www.linkedin.com/in/ozgur-asik-msc">linkedin.com/in/ozgur-asik-msc</a>
+                </td>
+            </tr>
+        </table>
+    </footer>
+</body>
+</html>
+<script>
+    var app = angular.module('myApp', []);
+    app.factory('BringShipperFactory', BringShipper);
+    BringShipper.$inject = ['$http'];
+    function BringShipper($http) {
+        var Get = {};
+        Get = $http.get("http://localhost:60734/api/Shipper");
+        return Get;
+    }
+    app.controller('crudController', crudController);
+    crudController.$inject = ['$http', 'BringShipperFactory'];
+    function crudController($http, BringShipperFactory) {
+        var vm = this;
+        vm.Shippers = {};
+        vm.Shipper = {};
+        BringShipperFactory.then(function (response) {
+            vm.Shippers = response.data;
+        });
+        vm.Select = function (shipperID) {
+            $http.get("http://localhost:60734/api/Shipper/" + shipperID).then(Screened);
+            function Screened(response) {
+                vm.selectedShipper = response.data;
+                $('html, body').animate({
+                    scrollTop: $('#third-table').offset().top
+                }, 900);
+            };
+        };
+        vm.Delete = function (shipperID) {
+            $http.delete("http://localhost:60734/api/Shipper/" + shipperID).then(Deleted);
+            function Deleted(response) {
+                vm.Shippers = response.data;
+                alert("Selected company successfully deleted.");
+            };
+        };
+        vm.SelectToUpdate = function (shipperID) {
+            $http.get("http://localhost:60734/api/Shipper/" + shipperID).then(SelectedToUpdate);
+            function SelectedToUpdate(response) {
+                vm.Shipper = response.data;
+                $('html, body').animate({
+                    scrollTop: $('#first-tab').offset().top
+                }, 900);
+            };
+        };
+        vm.Reset = function () {
+            vm.Shipper = {};
+        };
+        vm.Insert = function (obj) {
+            $http.post("http://localhost:60734/api/Shipper", obj).then(Inserted);
+            function Inserted(response) {
+                vm.Shippers = response.data;
+                alert("Company successfully created.");
+            };
+        };
+        vm.Update = function (obj) {
+            $http.put("http://localhost:60734/api/Shipper", obj).then(Updated);
+            function Updated(response) {
+                vm.Shippers = response.data;
+                alert("Company successfully updated.");
+            };
+        };
+
+        return vm;
+    }
+
+    $('nav, a').on('click', function () {
+        if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top
+            }, 900, function () {
+                window.location.hash = hash;
+            });
+        }
+    });
+
+    $('.scroll-button-first').on('click', function () {
+        $('html, body').animate({
+            scrollTop: $('#second-tab').offset().top
+        }, 900);
+    });
+
+    $('.scroll-button-third').on('click', function () {
+        $('html, body').animate({
+            scrollTop: $('#second-tab').offset().top
+        }, 900);
+    });
+
+    $('.second-up').on('click', function () {
+        $('html, body').animate({
+            scrollTop: $('#first-tab').offset().top
+        }, 900);
+    });
+
+    $('.second-down').on('click', function () {
+        $('html, body').animate({
+            scrollTop: $('#third-table').offset().top
+        }, 900);
+    });
+
+    $('.footer-button').on('click', function () {
+        $('html, body').animate({
+            scrollTop: $('nav').offset().top
+        }, 600);
+    });
+</script>
